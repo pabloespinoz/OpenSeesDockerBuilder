@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 # basic variables and packages
 ENV DEBIAN_FRONTEND=noninteractive \
-    mainDir=/home
+    mainDir=/home/pablo
 WORKDIR $mainDir
 
 # basic packages
@@ -16,7 +16,7 @@ rm -rf /var/lib/apt/lists/*
 #     CMake-hdf5-1.10.4.tar.gz ./
 
 # get dependent packages, specify http.sslVerify=false to disable security check
-RUN git -c http.sslVerify=false clone https://github.com/jf-huang/OpenSeesDcokerBuilder.git && \
+RUN git -c http.sslVerify=false clone https://github.com/pabloespinoz/OpenSeesDcokerBuilder.git && \
 mv OpenSeesDcokerBuilder/* ./ && rm -r OpenSeesDcokerBuilder mumps_5.1.2.orig.tar.gz v2.2.1.petsc.tar.gz *Dockerfile* && \
 \
 \
@@ -97,20 +97,20 @@ ENV PATH "$PATH:$mainDir/mpiInstall/bin"
 # changing BUILD_TIME will break the cache here so that opensees code can be built each time
 ARG BUILD_TIME=unknown
 # opensees, install path: $mainDir/bin
-#RUN git clone https://github.com/jf-huang/OpenSees.git
+#RUN git clone https://github.com/pabloespinoz/OpenSees.git
 # parallel version
-RUN git -c http.sslVerify=false clone https://github.com/jf-huang/OpenSees.git && cd OpenSees && \
+RUN git -c http.sslVerify=false clone https://github.com/pabloespinoz/OpenSees.git && cd OpenSees && \
 rm Makefile.def && cp Makefile_PARALLEL.def Makefile.def && \
-sed -i 's:HOME  = /home/jfhuang:HOME  = ${mainDir}:g' Makefile.def && \
-sed -i 's:MUMPS_DIR = /home/jfhuang/Downloads/MUMPS_5.1.2:MUMPS_DIR = ${mainDir}/MUMPS_5.2.1:g' Makefile.def && \
+sed -i 's:HOME  = /home/pablo:HOME  = ${mainDir}:g' Makefile.def && \
+sed -i 's:MUMPS_DIR = /home/pablo/Downloads/MUMPS_5.1.2:MUMPS_DIR = ${mainDir}/MUMPS_5.2.1:g' Makefile.def && \
 make wipe && make && \
 cd .. && rm -r OpenSees MUMPS_5.2.1 hooks lib
 
 ENV PATH "$PATH:$mainDir/bin"
 
 # sequential version, might need to rebuild sequential version of HDF5 Lib
-#RUN ls /usr/local/hdf5/include && rm -r OpenSees && git clone https://github.com/jf-huang/OpenSees.git && cd OpenSees && rm Makefile.def && cp Makefile_SEQ.def Makefile.def && \
-#sed -i 's:HOME		= /home/jfhuang:HOME            = ${mainDir}:g' Makefile.def && \
+#RUN ls /usr/local/hdf5/include && rm -r OpenSees && git clone https://github.com/pabloespinoz/OpenSees.git && cd OpenSees && rm Makefile.def && cp Makefile_SEQ.def Makefile.def && \
+#sed -i 's:HOME		= /home/pabloespinoz:HOME            = ${mainDir}:g' Makefile.def && \
 #make && \
 #cd .. && rm -r OpenSees MUMPS_5.2.1
 

@@ -16,8 +16,8 @@ rm -rf /var/lib/apt/lists/*
 #     CMake-hdf5-1.10.4.tar.gz ./
 
 # get dependent packages, specify http.sslVerify=false to disable security check
-RUN git -c http.sslVerify=false clone https://github.com/pabloespinoz/OpenSeesDcokerBuilder.git && \
-mv OpenSeesDcokerBuilder/* ./ && rm -r OpenSeesDcokerBuilder mumps_5.1.2.orig.tar.gz v2.2.1.petsc.tar.gz *Dockerfile* && \
+RUN git -c http.sslVerify=false clone https://github.com/pabloespinoz/OpenSeesDockerBuilder.git && \
+mv OpenSeesDockerBuilder/* ./ && rm -r OpenSeesDockerBuilder mumps_5.1.2.orig.tar.gz v2.2.1.petsc.tar.gz *Dockerfile* && \
 \
 \
 \
